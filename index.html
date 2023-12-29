@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        #map {
+            width: 800px;
+            height: 800px;
+            background: url('images/Map.jpg') no-repeat center center;
+            background-size: cover;
+            position: relative;
+            margin: 20px auto;
+        }
+
+            #map .landing-spot {
+                position: absolute;
+                background-color: inherit;
+                border-radius: 50%;
+                border: solid 4px red;
+                width: 140px;
+                height: 140px;
+                transform: translate(-50%, -50%);
+            }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+
+
+    </style>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing spot randomizer</title>
+    
+</head>
+<body>
+    <div class="container">
+        <h1>Fortnite random landing spot generato</h1>
+        <div id="map"></div>
+        <button id="randomizeBtn">Get random location</button>
+    </div>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const map = document.getElementById('map');
+            const randomizeBtn = document.getElementById('randomizeBtn');
+
+            // X vasen
+            // Y korkeus
+            const locations = [
+                { x: 18, y: 35, name: 'RITZY RIVIERA' },
+                { x: 62, y: 68, name: 'HAZY HILLSIDE' },
+                { x: 73, y: 75, name: 'TÄNNE VUORELLE!!!' },
+                { x: 43, y: 64, name: 'FENCING FIELDS' },
+                { x: 42, y: 53, name: 'RUINED REELS'},
+                { x: 62, y: 46, name: 'RECKLESS RAILWAYS'},
+                { x: 26, y: 58, name: 'PLEASANT PIAZZA'},
+                { x: 25, y: 79, name: 'SNOOTY STEPPES'},
+                { x: 80, y: 44, name: 'GRAND GLACIER'},
+                { x: 63, y: 22, name: 'CLASSY COURTS'},
+                
+            ];
+
+            randomizeBtn.addEventListener('click', function () {
+                
+                removeAllLandingSpots();
+
+                
+                const randomIndex = Math.floor(Math.random() * locations.length);
+                const selectedLocation = locations[randomIndex];
+
+                
+                const landingSpot = document.createElement('div');
+                landingSpot.className = 'landing-spot';
+                landingSpot.style.left = `${selectedLocation.x}%`;
+                landingSpot.style.top = `${selectedLocation.y}%`;
+                map.appendChild(landingSpot);
+
+                
+                alert(`Next landing spot: ${selectedLocation.name}`);
+            });
+
+            function removeAllLandingSpots() {
+                const landingSpots = document.querySelectorAll('.landing-spot');
+                landingSpots.forEach(spot => spot.remove());
+            }
+        });
+
+
+
+    </script>
+</body>
+</html>

@@ -128,7 +128,9 @@
     <div class="container">
         <button id="randomizeBtn">Get random location</button>
         <div id="locationText"></div>
-        <div id="map"></div>
+        <div id="map" style="position: relative">
+          <img id="trainImage" src="images/train.jpg" alt="" style="position: absolute; display: none;">
+        </div>
         
     </div>
     <script>
@@ -137,6 +139,7 @@
             const map = document.getElementById('map');
             const randomizeBtn = document.getElementById('randomizeBtn');
             const locationText = document.getElementById('locationText');
+            const trainImage = document.getElementById('trainImage');
 
             // X vasen
             // Y korkeus
@@ -155,23 +158,34 @@
             ];
 
             randomizeBtn.addEventListener('click', function () {
-                
                 removeAllLandingSpots();
 
                 
-                const randomIndex = Math.floor(Math.random() * locations.length);
-                const selectedLocation = locations[randomIndex];
+                const showTrain = Math.random() < 0.1;
 
-                
-                const landingSpot = document.createElement('div');
-                landingSpot.className = 'landing-spot';
-                landingSpot.style.left = `${selectedLocation.x}%`;
-                landingSpot.style.top = `${selectedLocation.y}%`;
-                map.appendChild(landingSpot);
+                if (showTrain) {
+                   
+                    trainImage.style.display = 'block';
+                    locationText.textContent = "Mennään junaan!!!";
+                } else {
+                    
+                    const randomIndex = Math.floor(Math.random() * locations.length);
+                    const selectedLocation = locations[randomIndex];
 
-                
-                locationText.textContent = "seuraavaksi menemme: ${selectedLocation.name}"
-                
+                    
+                    const landingSpot = document.createElement('div');
+                    landingSpot.className = 'landing-spot';
+                    landingSpot.style.left = `${selectedLocation.x}%`;
+                    landingSpot.style.top = `${selectedLocation.y}%`;
+                    map.appendChild(landingSpot);
+
+                    
+                    trainImage.style.display = 'none';
+
+                    locationText.innerHTML = 'Seuraavaksi menemme: <span style="color: #face00; font-size: 28px; text-decoration: underline;">${selectedLocation.name}</span>';
+
+                    //locationText.textContent = `Seuraavaksi menemme: <span style: color: #face00;>${selectedLocation.name}</span>`;
+                }
             });
 
             function removeAllLandingSpots() {
